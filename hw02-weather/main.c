@@ -19,8 +19,8 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
 
     char *ptr = realloc(mem->memory, mem->size + realsize + 1);
     if (!ptr) {
-      printf("not enough memory (realloc returned NULL)\n");
-      return 0;
+        printf("not enough memory (realloc returned NULL)\n");
+        return 0;
     }
 
     mem->memory = ptr;
@@ -57,7 +57,7 @@ convert_to_city_url(const char* city, char* city_url) {
 int main(int argc, char* argv[]) {
     if (argc <= 1) {
         fprintf(stderr, "City not specified!\n");
-        return -1;
+        return 0;
     }
 
     const char* city = argv[1];
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 
     if (convert_to_city_url(city, city_url) == 0) {
         fprintf(stderr, "Bad input data!\n");
-        return -1;
+        return 0;
     }
 
     char url[256];
@@ -102,24 +102,24 @@ int main(int argc, char* argv[]) {
         } else {
             printf("City: %s\n", city);
 
-            json_object* current_condition = json_object_array_get_idx(
+            struct json_object* current_condition = json_object_array_get_idx(
                                                  json_object_object_get(root, "current_condition"), 0);
-            json_object* weather = json_object_array_get_idx(
+            struct json_object* weather = json_object_array_get_idx(
                                                  json_object_object_get(root, "weather"), 0);
 
 
-            json_object* weather_desc = json_object_array_get_idx(
+            struct json_object* weather_desc = json_object_array_get_idx(
                                             json_object_object_get(current_condition, "weatherDesc"), 0);
             printf("Weather description: %s\n", json_object_get_string(json_object_object_get(weather_desc, "value")));
 
-            json_object* wind_dir = json_object_object_get(current_condition, "winddir16Point");
+            struct json_object* wind_dir = json_object_object_get(current_condition, "winddir16Point");
             printf("Wind direction: %s\n", json_object_get_string(wind_dir));
 
-            json_object* wind_speed = json_object_object_get(current_condition, "windspeedKmph");
+            struct json_object* wind_speed = json_object_object_get(current_condition, "windspeedKmph");
             printf("Wind speed: %s km/h\n", json_object_get_string(wind_speed));
 
-            json_object* max_temp = json_object_object_get(weather, "maxtempC");
-            json_object* min_temp = json_object_object_get(weather, "mintempC");
+            struct json_object* max_temp = json_object_object_get(weather, "maxtempC");
+            struct json_object* min_temp = json_object_object_get(weather, "mintempC");
             printf("Temperature: %s..%s °C\n", json_object_get_string(min_temp), json_object_get_string(max_temp));
         }
 
