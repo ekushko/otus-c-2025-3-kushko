@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(hw03-weather LANGUAGES C)
+project(hw02-weather LANGUAGES C)
 
-add_executable(hw03-weather main.c)
+add_executable(${PROJECT_NAME} main.c)
 
 find_package(CURL REQUIRED)
 
