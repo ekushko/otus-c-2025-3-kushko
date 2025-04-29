@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <ctype.h>
 
 #include <curl/curl.h>
@@ -32,7 +31,8 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     return realsize;
 }
 
-size_t convert_to_city_url(const char* city, char* city_url) {
+size_t
+convert_to_city_url(const char* city, char* city_url) {
     size_t city_url_len = 0, len = strlen(city);
 
     for (size_t i = 0; i < len; ++i) {
