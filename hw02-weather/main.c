@@ -8,9 +8,6 @@
 
 #include <json-c/json.h>
 
-#define URL_PREFIX "https://wttr.in/"
-#define URL_PREFIX_LEN 16
-
 struct MemoryStruct {
     char *memory;
     size_t size;
