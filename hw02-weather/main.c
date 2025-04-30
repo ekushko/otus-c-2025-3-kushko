@@ -36,7 +36,7 @@ convert_to_city_url(const char* city, char* city_url) {
     size_t city_url_len = 0, len = strlen(city);
 
     for (size_t i = 0; i < len; ++i) {
-        if (isalpha(city[i]) || city[i] == ' ') {
+        if (isalpha(city[i]) || city[i] == ' ' || city[i] == '-') {
             if (city[i] != ' ') {
                 city_url[city_url_len++] = city[i];
             } else {
@@ -89,10 +89,17 @@ int main(int argc, char* argv[]) {
     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
     res = curl_easy_perform(curl_handle);
-    if(res != CURLE_OK) {
+    if (res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-    }
-    else {
+    } else {
+        long http_code = 0;
+        curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE, &http_code);
+
+        if (http_code == 404) {
+            fprintf(stderr, "City not found!\n");
+            return 0;
+        }
+
         struct json_tokener* tok = json_tokener_new();
 
         struct json_object* root = json_tokener_parse_ex(tok, chunk.memory, chunk.size);
