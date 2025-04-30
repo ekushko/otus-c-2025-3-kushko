@@ -54,41 +54,24 @@ convert_to_city_url(const char* city, char* city_url) {
     return city_url_len;
 }
 
-int main(int argc, char* argv[]) {
-    if (argc <= 1) {
-        fprintf(stderr, "City not specified!\n");
-        return 0;
-    }
-
-    const char* city = argv[1];
-
+void
+print_weather(CURL* curl_handle, struct MemoryStruct* chunk, const char* city) {
     char city_url[230];
 
     if (convert_to_city_url(city, city_url) == 0) {
         fprintf(stderr, "Bad input data!\n");
-        return 0;
+        return;
     }
 
     char url[256];
     snprintf(url, sizeof(url), "https://wttr.in/%s?format=j1", city_url);
 
-    CURL *curl_handle;
     CURLcode res;
 
-    struct MemoryStruct chunk;
-
-    chunk.memory = malloc(1);
-    chunk.size = 0;
-
-    curl_global_init(CURL_GLOBAL_ALL);
-
-    curl_handle = curl_easy_init();
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
-    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
-    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
     res = curl_easy_perform(curl_handle);
+
     if (res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
     } else {
@@ -96,13 +79,13 @@ int main(int argc, char* argv[]) {
         curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE, &http_code);
 
         if (http_code == 404) {
-            fprintf(stderr, "City not found!\n");
-            return 0;
+            printf("City: %s not found!\n", city);
+            return;
         }
 
         struct json_tokener* tok = json_tokener_new();
 
-        struct json_object* root = json_tokener_parse_ex(tok, chunk.memory, chunk.size);
+        struct json_object* root = json_tokener_parse_ex(tok, chunk->memory, chunk->size);
 
         if (!root) {
             fprintf(stderr, "JSON parsing error: %s\n", json_tokener_error_desc(json_tokener_get_error(tok)));
@@ -133,6 +116,33 @@ int main(int argc, char* argv[]) {
         json_object_put(root);
 
         json_tokener_free(tok);
+    }
+}
+
+int main(int argc, char* argv[]) {
+    if (argc <= 1) {
+        fprintf(stderr, "City not specified!\n");
+        return 0;
+    }
+
+    CURL* curl_handle;
+
+    struct MemoryStruct chunk;
+
+    chunk.memory = malloc(1);
+    chunk.size = 0;
+
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    curl_handle = curl_easy_init();
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
+    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+    for (int i = 1; i < argc; ++i) {
+        const char* city = argv[i];
+        print_weather(curl_handle, &chunk, city);
+        puts("");
     }
 
     curl_easy_cleanup(curl_handle);
