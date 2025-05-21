@@ -67,3 +67,4 @@ CMakeUserPresets.json
 
 # User
 build
+!hw07-logger/app/libs/logger/lib/liblogger.a
