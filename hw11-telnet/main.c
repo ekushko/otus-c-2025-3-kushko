@@ -82,9 +82,8 @@ int main(int argc, char* argv[]) {
     while ((rcv_len = recv(sock, &buf[acc_len], BUF_SIZE - acc_len, 0)) > 0)
         acc_len = acc_len + rcv_len;
 
-    for (size_t i = strlen(request); i < acc_len - 1; ++i) {
+    for (size_t i = strlen(request); i < acc_len - 1; ++i)
         printf("%c", buf[i]);
-    }
 
     shutdown(sock, SHUT_RDWR);
     close(sock);
