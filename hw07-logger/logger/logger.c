@@ -40,6 +40,7 @@ Logger *logger_init(const char *file_path) {
     if (logger->fp == NULL) {
         perror(file_path);
     }
+    pthread_mutex_init(&logger->mutex, NULL);
     return logger;
 }
 
@@ -83,6 +84,7 @@ void logger_free(Logger* logger) {
     if (logger->fp != NULL) {
         fclose(logger->fp);
     }
+    pthread_mutex_destroy(&logger->mutex);
     free(logger);
     logger = NULL;
 }
