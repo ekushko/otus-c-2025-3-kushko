@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
     if (argc >= 4) {
         port = atoi(argv[3]);
     } else {
-        port = 30020;
+        port = default_port;
         printf("Port wasn't specified. Default(%d) used\n", port);
     }
 
