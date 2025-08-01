@@ -224,6 +224,8 @@ int main(int argc, char* argv[]) {
     }
 
     printf("Server(%s:%d) started. Working DIR: %s\n", addr, port, dir_path);
+    free(addr);
+    free(dir_path);
 
     listen_ev.events = EPOLLIN | EPOLLET;
     listen_ev.data.fd = server;
