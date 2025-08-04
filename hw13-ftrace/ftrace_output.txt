@@ -1,0 +1,36 @@
+# tracer: function
+#
+# entries-in-buffer/entries-written: 24/24   #P:6
+#
+#                                _-----=> irqs-off
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+     hw13-ftrace-6172    [002] .....  2770.031471: __x64_sys_write <-do_syscall_64              # main.c:51 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031476: __x64_sys_write <-do_syscall_64              # main.c:53 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031477: __x64_sys_write <-do_syscall_64              # main.c:56 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031478: __x64_sys_openat <-do_syscall_64             # main.c:57 Открытие файла
+     hw13-ftrace-6172    [002] .....  2770.031526: __x64_sys_write <-do_syscall_64              # main.c:62 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031535: __x64_sys_write <-do_syscall_64              # main.c:65 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031536: __x64_sys_write <-do_syscall_64              # main.c:67 Запись текста в файл
+     hw13-ftrace-6172    [002] .....  2770.031551: __x64_sys_write <-do_syscall_64              # main.c:68 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031562: __x64_sys_write <-do_syscall_64              # main.c:71 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031563: __x64_sys_newfstatat <-do_syscall_64         # main.c:73 Получение информации о файле
+     hw13-ftrace-6172    [002] .....  2770.031565: __x64_sys_write <-do_syscall_64              # main.c:74 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031566: __x64_sys_write <-do_syscall_64              # main.c:75 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031574: __x64_sys_write <-do_syscall_64              # main.c:79 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031575: __x64_sys_close <-do_syscall_64              # main.c:80 Закрытие файла
+     hw13-ftrace-6172    [002] .....  2770.031584: __x64_sys_write <-do_syscall_64              # main.c:81 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031586: __x64_sys_write <-do_syscall_64              # main.c:84 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031587: __x64_sys_unlink <-do_syscall_64             # main.c:85 Удаление файла
+     hw13-ftrace-6172    [002] .....  2770.031604: __x64_sys_write <-do_syscall_64              # main.c:86 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031612: __x64_sys_write <-do_syscall_64              # main.c:92 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031613: __x64_sys_chdir <-do_syscall_64              # main.c:93 Смена директории
+     hw13-ftrace-6172    [002] .....  2770.031614: __x64_sys_write <-do_syscall_64              # main.c:95 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031615: __x64_sys_write <-do_syscall_64              # main.c:96 Вывод текста в stdout
+     hw13-ftrace-6172    [002] .....  2770.031615: __x64_sys_write <-do_syscall_64              # main.c:98 Завершение программы
+     hw13-ftrace-6172    [002] .....  2770.031620: __x64_sys_exit_group <-do_syscall_64         # main.c:98 Завершение программы
