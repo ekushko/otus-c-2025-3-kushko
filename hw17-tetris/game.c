@@ -203,11 +203,13 @@ void handle_input() {
     }
 }
 
-void run_game() {
+int run_game() {
     initscr();
     cbreak();
     noecho();
     nodelay(stdscr, TRUE);
+
+    srand(time(NULL));
 
     printf("\033[?25l");
 
@@ -243,4 +245,6 @@ void run_game() {
     printf("Game over!\nScore: %d\n", score);
 
     printf("\033[?25h");
+
+    return score;
 }
