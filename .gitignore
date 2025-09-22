@@ -68,4 +68,5 @@ CMakeUserPresets.json
 # User
 build
 !hw07-logger/app/libs/logger/lib/liblogger.a
+!dpdk-analyzer/app/libs/logger/lib/liblogger.a
 !hw14-driver/Makefile
